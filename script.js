@@ -23,7 +23,7 @@ let selectedDateKey = null;
 let selectedMood = null;
 
 /* =========================
-   CALENDAR GENERATION
+   CALENDAR GENERATION!!!generates months and the corresponding dates and the thing rearraanges itself
    ========================= */
 
 function generateCalendar(month, year) {
@@ -39,7 +39,7 @@ function generateCalendar(month, year) {
     daysContainer.appendChild(empty);
   }
 
-  // actual days
+  // actual days-generate
   for (let day = 1; day <= daysInMonth; day++) {
     const dayEl = document.createElement("div");
     dayEl.className = "day";
@@ -48,10 +48,11 @@ function generateCalendar(month, year) {
     const key = `mood-${year}-${month}-${day}`;
     const saved = JSON.parse(localStorage.getItem(key));
 
+    //note thingy
     if (saved?.note) dayEl.classList.add("has-note");
     if (saved?.mood) dayEl.classList.add(saved.mood);
 
-    // today highlight
+    // today highlight- circle thingy around current date
     const today = new Date();
     if (
       day === today.getDate() &&
@@ -69,7 +70,7 @@ function generateCalendar(month, year) {
 }
 
 /* =========================
-   MODAL LOGIC
+   MODAL LOGIC!!!
    ========================= */
 
 function openModal(day, key) {
@@ -151,3 +152,4 @@ prevBtn.onclick = () => {
    ========================= */
 
 generateCalendar(currentMonth, currentYear);
+
