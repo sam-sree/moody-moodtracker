@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+
+  
+  <title>Mood Tracker</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <div class="page">
+    <div class="calendar-card">
+
+<div class="calendar-header">
+  <button class="month-btn prev" aria-label="Previous month">‹</button>
+  <h1 id="month-label">January 2026</h1>
+  <button class="month-btn next" aria-label="Next month">›</button>
+</div>
+
+      <div class="weekdays">
+        <div>Sun</div><div>Mon</div><div>Tue</div>
+        <div>Wed</div><div>Thu</div><div>Fri</div><div>Sat</div>
+      </div>
+
+      <div class="days">
+        <!-- empty slots -->
+        <div class="day empty"></div>
+        <div class="day empty"></div>
+        <div class="day empty"></div>
+        <div class="day empty"></div>
+
+        <!-- days -->
+        <div class="day">1</div><div class="day">2</div><div class="day">3</div>
+        <div class="day">4</div><div class="day">5</div><div class="day">6</div>
+        <div class="day">7</div><div class="day">8</div><div class="day">9</div>
+        <div class="day">10</div><div class="day">11</div><div class="day">12</div>
+        <div class="day">13</div><div class="day">14</div><div class="day">15</div>
+        <div class="day">16</div><div class="day">17</div><div class="day">18</div>
+        <div class="day">19</div><div class="day">20</div><div class="day">21</div>
+        <div class="day">22</div><div class="day">23</div><div class="day">24</div>
+        <div class="day">25</div><div class="day">26</div><div class="day">27</div>
+        <div class="day">28</div><div class="day">29</div><div class="day">30</div>
+        <div class="day">31</div>
+      </div>
+
+      <div class="legend">
+        <span><i class="happy"></i> Happy</span>
+        <span><i class="peaceful"></i> Peaceful</span>
+        <span><i class="anxious"></i> Anxious</span>
+        <span><i class="depressed"></i> Depressed</span>
+        <span><i class="angry"></i> Angry</span>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- MODAL -->
+<div class="modal hidden">
+  <div class="modal-card">
+    <div class="modal-header">
+      <h2 id="modal-date">Date</h2>
+      <button class="close">×</button>
+    </div>
+
+    <p>How do you feel today?</p>
+
+    <!-- MOOD SELECTOR -->
+    <div class="moods">
+      <div class="mood happy" data-mood="happy">😄</div>
+      <div class="mood peaceful" data-mood="peaceful">😊</div>
+      <div class="mood anxious" data-mood="anxious">😰</div>
+      <div class="mood depressed" data-mood="depressed">😔</div>
+      <div class="mood angry" data-mood="angry">😠</div>
+    </div>
+
+    <textarea id="note-text" placeholder="What happened today?"></textarea>
+
+    <button class="save">Save</button>
+  </div>
+</div>
+
+  <script src="script.js"></script>
+</body>
+</html>
