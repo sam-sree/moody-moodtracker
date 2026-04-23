@@ -1,5 +1,5 @@
 mood-calendar
-basic calender that tracks mood and keeps note.
+basic calendar that tracks mood and keeps note.
 
 
 Mood Calendar
