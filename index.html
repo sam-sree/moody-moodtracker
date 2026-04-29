@@ -346,8 +346,23 @@
       0%, 100% { transform: translateY(0); }
       50% { transform: translateY(-15px); }
     }
+    .privacy-banner {
+      margin-top: 30px !important;
+      padding: 15px 25px !important;
+      background: rgba(138, 142, 117, 0.05) !important;
+      border: 1px solid rgba(138, 142, 117, 0.1) !important;
+      font-size: 0.8rem !important;
+      color: var(--text-main) !important;
+      opacity: 0.8 !important;
+      max-width: 500px !important;
+      text-align: center !important;
+      line-height: 1.5 !important;
+      font-style: italic !important;
+      border-radius: 0 !important; /* Sharp edges */
+    }
+
     .footer {
-      margin-top: 50px !important;
+      margin-top: 40px !important;
       font-size: 0.85rem !important;
       font-weight: 600 !important;
       color: var(--text-main) !important;
@@ -413,6 +428,10 @@
         <span><i class="angry"></i> Angry</span>
       </div>
 
+    </div>
+
+    <div class="privacy-banner">
+      Your privacy matters. All data is stored locally in your browser's memory—this means your moods are private to this device and cannot be accessed from anywhere else.
     </div>
 
     <footer class="footer">
