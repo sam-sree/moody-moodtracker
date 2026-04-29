@@ -1,55 +1,384 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
+  <title>Mood Tracker - THEMED</title>
+  <style>
+    :root {
+      /* Mood Colors */
+      --happy: #F4E06D !important;
+      --calm: #8FD694 !important;
+      --anxious: #B39DDB !important;
+      --sad: #90CAF9 !important;
+      --angry: #FF8A80 !important;
+      
+      /* Specified Palette */
+      --soft-linen: #F1EAD8 !important;
+      --warm-sandstone: #D5C7AD !important;
+      --muted-sage: #8A8E75 !important;
+      --dusty-olive: #BEC5A4 !important;
+      --earth-brown: #68604D !important;
+      
+      /* Mapping */
+      --bg-color: var(--soft-linen) !important;
+      --card-bg: var(--soft-linen) !important;
+      --secondary-bg: var(--warm-sandstone) !important;
+      --primary-ui: var(--muted-sage) !important;
+      --accent-ui: var(--dusty-olive) !important;
+      --text-main: var(--earth-brown) !important;
+    }
 
-  
-  <title>Mood Tracker</title>
-  <link rel="stylesheet" href="style.css">
+    * {
+      box-sizing: border-box !important;
+      margin: 0 !important;
+      padding: 0 !important;
+      font-family: "Helvetica", "Arial", sans-serif !important;
+    }
+
+    body {
+      min-height: 100vh !important;
+      background-color: #fdfbf7 !important; /* Lighter beige */
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200' viewBox='0 0 200 200'%3E%3Cg fill='%238a8e75' fill-opacity='0.05'%3E%3Cpath d='M30 40c5-5 15-10 25-5s10 15 5 25-15 10-25 5-10-15-5-25zm5 5c-3 3-3 10 0 15 3 5 10 3 15 0 5-3 3-10 0-15-3-5-10-3-15 0z'/%3E%3Cpath d='M160 30c-5-5-15-10-25-5s-10 15-5 25 15 10 25 5 10-15 5-25zm-5 5c3 3 3 10 0 15-3 5-10 3-15 0-5-3-3-10 0-15 3-5 10-3 15 0z'/%3E%3Cpath d='M100 150c10-10 30-15 45-5s15 30 5 45-30 15-45 5-15-30-5-45zm10 10c-5 5-5 20 0 30 5 10 20 5 30 0 10-5 5-20 0-30-5-10-20-5-30 0z'/%3E%3Cpath d='M40 160c-8 0-15-5-15-15 0-10 7-15 15-15s15 5 15 15-7 15-15 15zm0-5c4 0 7-3 7-7s-3-7-7-7-7 3-7 7 3 7 7 7z'/%3E%3Cpath d='M100 20c5 0 10 5 10 10s-5 10-10 10-10-5-10-10 5-10 10-10z'/%3E%3Cpath d='M180 100c0 5-5 10-10 10s-10-5-10-10 5-10 10-10 10 5 10 10z'/%3E%3Cpath d='M20 100c0-5 5-10 10-10s10 5 10 10-5 10-10 10-10-5-10-10z'/%3E%3C/g%3E%3C/svg%3E") !important;
+      color: var(--text-main) !important;
+      display: flex !important;
+      justify-content: center !important;
+      align-items: center !important;
+      overflow-x: hidden !important;
+      position: relative !important;
+    }
+
+    .calendar-card {
+      background: rgba(241, 234, 216, 0.6) !important;
+      backdrop-filter: blur(25px) saturate(180%) !important;
+      -webkit-backdrop-filter: blur(25px) saturate(180%) !important;
+      border: 3px solid var(--muted-sage) !important;
+      padding: 50px !important;
+      border-radius: 0 !important; /* Sharp rectangle */
+      width: 95% !important;
+      max-width: 750px !important;
+      box-shadow: 0 25px 60px rgba(104, 96, 77, 0.1) !important;
+      overflow: hidden !important;
+      display: flex !important;
+      flex-direction: column !important;
+    }
+
+    .calendar-header {
+      display: flex !important;
+      align-items: center !important;
+      justify-content: space-between !important;
+      margin-bottom: 40px !important;
+    }
+
+    #month-label {
+      font-size: 2.5rem !important;
+      font-weight: 700 !important;
+      color: var(--text-main) !important;
+      letter-spacing: -1px !important;
+    }
+
+    .month-btn {
+      width: 52px !important;
+      height: 52px !important;
+      border-radius: 50% !important;
+      border: none !important;
+      background: var(--primary-ui) !important;
+      color: #fdfbf7 !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      font-size: 26px !important;
+      cursor: pointer !important;
+      box-shadow: 0 6px 15px rgba(138, 142, 117, 0.2) !important;
+      transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important;
+    }
+
+    .month-btn:hover {
+      background: var(--accent-ui) !important;
+      transform: scale(1.15) !important;
+      color: var(--earth-brown) !important;
+    }
+
+    .weekdays {
+      display: grid !important;
+      grid-template-columns: repeat(7, 1fr) !important;
+      text-align: center !important;
+      font-weight: 700 !important;
+      font-size: 0.85rem !important;
+      text-transform: uppercase !important;
+      letter-spacing: 2px !important;
+      color: var(--text-main) !important;
+      opacity: 0.6 !important;
+      margin-bottom: 24px !important;
+      width: 100% !important;
+    }
+
+    .days {
+      display: grid !important;
+      grid-template-columns: repeat(7, 1fr) !important;
+      gap: 12px !important;
+      width: 100% !important;
+    }
+
+    .day {
+      width: 100% !important;
+      aspect-ratio: 1/1 !important;
+      border-radius: 16px !important;
+      background: rgba(213, 199, 173, 0.4); /* REMOVED !important to allow JS override */
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      font-weight: 600 !important;
+      color: var(--text-main) !important;
+      cursor: pointer !important;
+      position: relative !important;
+      transition: all 0.3s ease !important;
+      border: 1px solid rgba(104, 96, 77, 0.1) !important;
+      font-size: 1.1rem !important;
+    }
+
+    .day.empty {
+      background: transparent !important;
+      border: none !important;
+      pointer-events: none !important;
+    }
+
+    .day:hover:not(.empty) {
+      background: var(--accent-ui) !important;
+      transform: scale(1.08) translateY(-5px) !important;
+      z-index: 10 !important;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.05) !important;
+    }
+
+    .day.today {
+      box-shadow: inset 0 0 0 4px var(--primary-ui) !important;
+    }
+
+    .day.has-note::after {
+      content: "!" !important;
+      font-size: 0.9rem !important;
+      font-weight: 900 !important;
+      color: #FF5252 !important; /* Vibrant Red */
+      position: absolute !important;
+      top: -2px !important;
+      right: 2px !important;
+      animation: float 1.5s ease-in-out infinite !important;
+      text-shadow: 0 0 5px rgba(255, 82, 82, 0.3) !important;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-4px); }
+    }
+
+    .legend {
+      display: flex !important;
+      justify-content: center !important;
+      gap: 20px !important;
+      margin-top: 50px !important;
+      flex-wrap: wrap !important;
+    }
+
+    .legend span {
+      display: flex !important;
+      align-items: center !important;
+      gap: 10px !important;
+      font-size: 0.9rem !important;
+      font-weight: 600 !important;
+      color: var(--text-main) !important;
+    }
+
+    .legend i {
+      width: 16px !important;
+      height: 16px !important;
+      border-radius: 6px !important;
+    }
+
+    .happy { background: var(--happy) !important; }
+    .calm { background: var(--calm) !important; }
+    .anxious { background: var(--anxious) !important; }
+    .sad { background: var(--sad) !important; }
+    .angry { background: var(--angry) !important; }
+
+    .modal {
+      position: fixed !important;
+      inset: 0 !important;
+      background: rgba(104, 96, 77, 0.6) !important;
+      backdrop-filter: blur(8px) !important;
+      display: flex !important;
+      justify-content: center !important;
+      align-items: center !important;
+      z-index: 100 !important;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    .modal-card {
+      background: var(--soft-linen) !important;
+      padding: 40px !important;
+      border-radius: 0 !important; /* Sharp edges */
+      width: 400px !important;
+      border: 3px solid var(--muted-sage) !important; /* Sage green border */
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3) !important;
+    }
+
+    .modal-header {
+      display: flex !important;
+      justify-content: space-between !important;
+      align-items: center !important;
+      margin-bottom: 24px !important;
+    }
+
+    #modal-date {
+      font-size: 1.6rem !important;
+      font-weight: 700 !important;
+      color: var(--text-main) !important;
+    }
+
+    .close {
+      background: var(--warm-sandstone) !important;
+      border: 2px solid var(--muted-sage) !important;
+      width: 36px !important;
+      height: 36px !important;
+      border-radius: 0 !important; /* Sharp edges */
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      font-size: 22px !important;
+      color: var(--earth-brown) !important;
+    }
+
+    .moods {
+      display: flex !important;
+      justify-content: space-between !important;
+      margin: 24px 0 !important;
+    }
+
+    .mood {
+      width: 65px !important;
+      height: 65px !important;
+      border-radius: 0 !important; /* Sharp edges */
+      display: flex !important;
+      justify-content: center !important;
+      align-items: center !important;
+      cursor: pointer !important;
+      font-size: 30px !important;
+      background: var(--warm-sandstone) !important;
+      border: 1px solid rgba(104, 96, 77, 0.1) !important;
+      transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.05) !important;
+    }
+
+    /* Assigning colors to squares in picker */
+    .mood.happy { background: rgba(244, 224, 109, 0.3) !important; border-color: rgba(244, 224, 109, 0.5) !important; }
+    .mood.calm { background: rgba(143, 214, 148, 0.3) !important; border-color: rgba(143, 214, 148, 0.5) !important; }
+    .mood.anxious { background: rgba(179, 157, 219, 0.3) !important; border-color: rgba(179, 157, 219, 0.5) !important; }
+    .mood.sad { background: rgba(144, 202, 249, 0.3) !important; border-color: rgba(144, 202, 249, 0.5) !important; }
+    .mood.angry { background: rgba(255, 138, 128, 0.3) !important; border-color: rgba(255, 138, 128, 0.5) !important; }
+
+    .mood:hover {
+      transform: scale(1.1) translateY(-5px) !important;
+      box-shadow: 0 8px 15px rgba(0,0,0,0.1) !important;
+    }
+
+    .mood.selected {
+      background: var(--primary-ui) !important; /* Selected state override */
+      border-color: var(--earth-brown) !important;
+      transform: scale(1.1) !important;
+      box-shadow: 0 10px 20px rgba(138, 142, 117, 0.3) !important;
+    }
+
+    /* Specific selected state colors for better feedback */
+    .mood.selected.happy { background: var(--happy) !important; }
+    .mood.selected.calm { background: var(--calm) !important; }
+    .mood.selected.anxious { background: var(--anxious) !important; }
+    .mood.selected.sad { background: var(--sad) !important; }
+    .mood.selected.angry { background: var(--angry) !important; }
+
+    textarea {
+      width: 100% !important;
+      height: 120px !important;
+      margin-top: 20px !important;
+      padding: 16px !important;
+      border: 3px solid var(--muted-sage) !important;
+      border-radius: 0 !important; /* Sharp edges */
+      outline: none !important;
+      font-size: 1rem !important;
+      resize: none !important;
+      background: var(--warm-sandstone) !important;
+      color: var(--text-main) !important;
+    }
+
+    .save {
+      margin-top: 24px !important;
+      width: 100% !important;
+      padding: 18px !important;
+      border-radius: 0 !important; /* Sharp edges */
+      border: none !important;
+      background: var(--primary-ui) !important;
+      color: var(--soft-linen) !important;
+      font-size: 1.2rem !important;
+      font-weight: 700 !important;
+      cursor: pointer !important;
+      transition: all 0.3s ease !important;
+    }
+
+    .save:hover {
+      background: var(--accent-ui) !important;
+      color: var(--earth-brown) !important;
+    }
+
+    .main-title {
+      font-size: 5rem !important;
+      font-weight: 800 !important;
+      color: var(--muted-sage) !important;
+      margin-bottom: 20px !important;
+      letter-spacing: -3px !important;
+      font-family: "Helvetica", sans-serif !important;
+      animation: floatTitle 4s ease-in-out infinite !important;
+      text-align: center !important;
+      opacity: 0.9 !important;
+    }
+
+    @keyframes floatTitle {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-15px); }
+    }
+  </style>
 </head>
 
 <body>
-
-  <div class="page">
+  <div class="page" style="display: flex; flex-direction: column; align-items: center;">
+    <h1 class="main-title">moody.</h1>
     <div class="calendar-card">
 
-<div class="calendar-header">
-  <button class="month-btn prev" aria-label="Previous month">‹</button>
-  <h1 id="month-label">January 2026</h1>
-  <button class="month-btn next" aria-label="Next month">›</button>
-</div>
+      <div class="calendar-header">
+        <button class="month-btn prev" aria-label="Previous month">‹</button>
+        <h1 id="month-label">January 2026</h1>
+        <button class="month-btn next" aria-label="Next month">›</button>
+      </div>
 
       <div class="weekdays">
-        <div>Sun</div><div>Mon</div><div>Tue</div>
-        <div>Wed</div><div>Thu</div><div>Fri</div><div>Sat</div>
+        <div>Sun</div>
+        <div>Mon</div>
+        <div>Tue</div>
+        <div>Wed</div>
+        <div>Thu</div>
+        <div>Fri</div>
+        <div>Sat</div>
       </div>
 
       <div class="days">
-        <!-- empty slots -->
-        <div class="day empty"></div>
-        <div class="day empty"></div>
-        <div class="day empty"></div>
-        <div class="day empty"></div>
-
-        <!-- days -->
-        <div class="day">1</div><div class="day">2</div><div class="day">3</div>
-        <div class="day">4</div><div class="day">5</div><div class="day">6</div>
-        <div class="day">7</div><div class="day">8</div><div class="day">9</div>
-        <div class="day">10</div><div class="day">11</div><div class="day">12</div>
-        <div class="day">13</div><div class="day">14</div><div class="day">15</div>
-        <div class="day">16</div><div class="day">17</div><div class="day">18</div>
-        <div class="day">19</div><div class="day">20</div><div class="day">21</div>
-        <div class="day">22</div><div class="day">23</div><div class="day">24</div>
-        <div class="day">25</div><div class="day">26</div><div class="day">27</div>
-        <div class="day">28</div><div class="day">29</div><div class="day">30</div>
-        <div class="day">31</div>
+        <!-- Days generated by JS -->
       </div>
 
       <div class="legend">
         <span><i class="happy"></i> Happy</span>
-        <span><i class="peaceful"></i> Peaceful</span>
+        <span><i class="calm"></i> Calm</span>
         <span><i class="anxious"></i> Anxious</span>
-        <span><i class="depressed"></i> Depressed</span>
+        <span><i class="sad"></i> Sad</span>
         <span><i class="angry"></i> Angry</span>
       </div>
 
@@ -57,30 +386,205 @@
   </div>
 
   <!-- MODAL -->
-<div class="modal hidden">
-  <div class="modal-card">
-    <div class="modal-header">
-      <h2 id="modal-date">Date</h2>
-      <button class="close">×</button>
+  <div class="modal hidden">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h2 id="modal-date">Date</h2>
+        <button class="close">×</button>
+      </div>
+
+      <p>How do you feel today?</p>
+
+      <!-- MOOD SELECTOR -->
+      <div class="moods">
+        <div class="mood happy" data-mood="happy" title="Happy">😄</div>
+        <div class="mood calm" data-mood="calm" title="Calm">😊</div>
+        <div class="mood anxious" data-mood="anxious" title="Anxious">😰</div>
+        <div class="mood sad" data-mood="sad" title="Sad">😔</div>
+        <div class="mood angry" data-mood="angry" title="Angry">😠</div>
+      </div>
+
+      <div id="live-preview-container" style="display: flex; align-items: center; gap: 15px; margin-bottom: 15px; background: rgba(0,0,0,0.03); padding: 10px; border-radius: 12px;">
+        <div id="live-preview-circle" style="width: 40px; height: 40px; border-radius: 10px; border: 1px solid rgba(0,0,0,0.1);"></div>
+        <span style="font-size: 0.85rem; font-weight: 600; opacity: 0.7;">Calendar Preview</span>
+      </div>
+
+      <textarea id="note-text" placeholder="What happened today?"></textarea>
+
+      <button class="save">Save</button>
     </div>
-
-    <p>How do you feel today?</p>
-
-    <!-- MOOD SELECTOR -->
-    <div class="moods">
-      <div class="mood happy" data-mood="happy">😄</div>
-      <div class="mood peaceful" data-mood="peaceful">😊</div>
-      <div class="mood anxious" data-mood="anxious">😰</div>
-      <div class="mood depressed" data-mood="depressed">😔</div>
-      <div class="mood angry" data-mood="angry">😠</div>
-    </div>
-
-    <textarea id="note-text" placeholder="What happened today?"></textarea>
-
-    <button class="save">Save</button>
   </div>
-</div>
 
-  <script src="script.js"></script>
+  <script>
+    console.log("🚀 MOOD TRACKER: LATEST VERSION LOADED (V3)");
+
+    const daysContainer = document.querySelector(".days");
+    const modal = document.querySelector(".modal");
+    const closeBtn = document.querySelector(".close");
+    const modalDate = document.getElementById("modal-date");
+    const noteInput = document.getElementById("note-text");
+    const saveBtn = document.querySelector(".save");
+    const moodsEls = document.querySelectorAll(".mood");
+    const livePreviewCircle = document.getElementById("live-preview-circle");
+
+    const monthLabel = document.getElementById("month-label");
+    const prevBtn = document.querySelector(".month-btn.prev");
+    const nextBtn = document.querySelector(".month-btn.next");
+
+    const months = [
+      "January", "February", "March", "April", "May", "June",
+      "July", "August", "September", "October", "November", "December"
+    ];
+
+    const moodColors = {
+      happy: '#F4E06D',
+      calm: '#8FD694',
+      anxious: '#B39DDB',
+      sad: '#90CAF9',
+      angry: '#FF8A80'
+    };
+
+    const todayDate = new Date();
+    let currentMonth = todayDate.getMonth();
+    let currentYear = todayDate.getFullYear();
+
+    let selectedDateKey = null;
+    let selectedMoods = [];
+
+    function generateCalendar(month, year) {
+      daysContainer.innerHTML = "";
+      const firstDay = new Date(year, month, 1).getDay();
+      const daysInMonth = new Date(year, month + 1, 0).getDate();
+
+      for (let i = 0; i < firstDay; i++) {
+        const empty = document.createElement("div");
+        empty.className = "day empty";
+        daysContainer.appendChild(empty);
+      }
+
+      for (let day = 1; day <= daysInMonth; day++) {
+        const dayEl = document.createElement("div");
+        dayEl.className = "day";
+        dayEl.textContent = day;
+
+        const key = `mood-${year}-${month}-${day}`;
+        const saved = JSON.parse(localStorage.getItem(key));
+
+        if (saved?.note) dayEl.classList.add("has-note");
+        
+        let dayMoods = [];
+        if (saved?.moods) {
+          dayMoods = saved.moods;
+        } else if (saved?.mood) {
+          dayMoods = [saved.mood];
+        }
+
+        if (dayMoods.length > 0) {
+          applyStyles(dayEl, dayMoods);
+        }
+
+        if (day === todayDate.getDate() && month === todayDate.getMonth() && year === todayDate.getFullYear()) {
+          dayEl.classList.add("today");
+        }
+
+        dayEl.addEventListener("click", () => openModal(day, key));
+        daysContainer.appendChild(dayEl);
+      }
+      monthLabel.textContent = `${months[month]} ${year}`;
+    }
+
+    function applyStyles(el, moods) {
+      if (moods.length === 1) {
+        const color = moodColors[moods[0]];
+        el.style.setProperty('background-color', color, 'important');
+        el.style.setProperty('background-image', 'none', 'important');
+      } else if (moods.length === 2) {
+        const grad = `linear-gradient(to bottom right, ${moodColors[moods[0]]} 50%, ${moodColors[moods[1]]} 50%)`;
+        el.style.setProperty('background-image', grad, 'important');
+      } else if (moods.length >= 3) {
+        const c1 = moodColors[moods[0]];
+        const c2 = moodColors[moods[1]];
+        const c3 = moodColors[moods[2]];
+        const conic = `conic-gradient(${c1} 0 120deg, ${c2} 120deg 240deg, ${c3} 240deg 360deg)`;
+        el.style.setProperty('background-image', conic, 'important');
+      }
+    }
+
+    function openModal(day, key) {
+      selectedDateKey = key;
+      modalDate.textContent = `${months[currentMonth]} ${day}, ${currentYear}`;
+      const saved = JSON.parse(localStorage.getItem(key));
+      noteInput.value = saved?.note || "";
+      
+      if (saved?.moods) {
+        selectedMoods = [...saved.moods];
+      } else if (saved?.mood) {
+        selectedMoods = [saved.mood];
+      } else {
+        selectedMoods = [];
+      }
+
+      updateMoodPickerUI();
+      modal.classList.remove("hidden");
+    }
+
+    function updateMoodPickerUI() {
+      moodsEls.forEach(el => {
+        const mood = el.dataset.mood;
+        if (selectedMoods.includes(mood)) {
+          el.classList.add("selected");
+        } else {
+          el.classList.remove("selected");
+        }
+      });
+      // Update Live Preview
+      if (selectedMoods.length > 0) {
+        applyStyles(livePreviewCircle, selectedMoods);
+      } else {
+        livePreviewCircle.style.background = "transparent";
+      }
+    }
+
+    closeBtn.onclick = () => modal.classList.add("hidden");
+    modal.onclick = e => e.target === modal && modal.classList.add("hidden");
+
+    moodsEls.forEach(el => {
+      el.addEventListener("click", () => {
+        const mood = el.dataset.mood;
+        const index = selectedMoods.indexOf(mood);
+        if (index > -1) {
+          selectedMoods.splice(index, 1);
+        } else if (selectedMoods.length < 3) {
+          selectedMoods.push(mood);
+        }
+        updateMoodPickerUI();
+      });
+    });
+
+    saveBtn.addEventListener("click", () => {
+      const note = noteInput.value.trim();
+      if (!note && selectedMoods.length === 0) {
+        localStorage.removeItem(selectedDateKey);
+      } else {
+        localStorage.setItem(selectedDateKey, JSON.stringify({ note, moods: selectedMoods }));
+      }
+      modal.classList.add("hidden");
+      generateCalendar(currentMonth, currentYear);
+    });
+
+    nextBtn.onclick = () => {
+      currentMonth++;
+      if (currentMonth > 11) { currentMonth = 0; currentYear++; }
+      generateCalendar(currentMonth, currentYear);
+    };
+
+    prevBtn.onclick = () => {
+      currentMonth--;
+      if (currentMonth < 0) { currentMonth = 11; currentYear--; }
+      generateCalendar(currentMonth, currentYear);
+    };
+
+    generateCalendar(currentMonth, currentYear);
+  </script>
 </body>
 </html>
