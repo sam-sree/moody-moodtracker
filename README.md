@@ -14,7 +14,7 @@ What it does
 
 - Displays a monthly calendar view
 - Click on any day to log:
-  - your mood (using color-coded emojis)
+  - your mood (using color-coded emojis)-upto 3 a day!
   - an optional note about the day
 - Saves everything locally using `localStorage`
 - Highlights:
