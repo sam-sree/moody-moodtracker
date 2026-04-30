@@ -55,7 +55,7 @@ function generateCalendar(month, year) {
     const saved = JSON.parse(localStorage.getItem(key));
 
     if (saved?.note) dayEl.classList.add("has-note");
-    
+
     // Handle both new array format and legacy single mood format
     let dayMoods = [];
     if (saved?.moods) {
@@ -95,7 +95,7 @@ function applyMoodGradient(el, moods) {
     const c3 = moodColors[moods[2]];
     bg = `conic-gradient(${c1} 0 120deg, ${c2} 120deg 240deg, ${c3} 240deg 360deg)`;
   }
-  
+
   if (bg) {
     el.style.setProperty('background', bg, 'important');
     el.style.setProperty('background-color', 'transparent', 'important');
@@ -108,7 +108,7 @@ function openModal(day, key) {
 
   const saved = JSON.parse(localStorage.getItem(key));
   noteInput.value = saved?.note || "";
-  
+
   if (saved?.moods) {
     selectedMoods = [...saved.moods];
   } else if (saved?.mood) {
@@ -140,7 +140,7 @@ moodsEls.forEach(el => {
   el.addEventListener("click", () => {
     const mood = el.dataset.mood;
     const index = selectedMoods.indexOf(mood);
-    
+
     if (index > -1) {
       selectedMoods.splice(index, 1);
       console.log("Removed mood:", mood);
