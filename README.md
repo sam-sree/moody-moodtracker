@@ -1,5 +1,4 @@
-mood-calendar
-basic calendar that tracks mood and keeps note.
+moody.
 
 
 Mood Calendar
