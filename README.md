@@ -44,6 +44,6 @@ Tech stack
 - Vanilla JavaScript
 - Browser `localStorage`
 
-No libraries, no frameworks, no backend.
+No libraries, no frameworks.
 
 ---
